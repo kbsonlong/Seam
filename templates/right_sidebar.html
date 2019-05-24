@@ -1,0 +1,83 @@
+
+<br class="col-12 mt-4 mb-4">
+<div class="wrapper">
+{% if post.toc %}
+    {% block toc %}
+        <div class="list-group">
+            <h4 class="list-group-item-heading">文章目录</h4>
+            {{ post.toc |safe }}
+        </div>
+    {% endblock %}
+{% endif %}
+</div>
+
+<br>
+<div class="widget widget-archives">
+    <h4 class="widget-title">归档</h4>
+    <ul class="nav">
+        <li class="nav-item">
+            <a href="#">2017 年 5 月</a>
+        </li>
+        <li class="nav-item">
+            <a href="#">2017 年 4 月</a>
+        </li>
+        <li class="nav-item">
+            <a href="#">2017 年 3 月</a>
+        </li>
+    </ul>
+</div>
+<br>
+<div class="widget widget-category">
+    <h4 class="widget-title">分类</h4>
+    <ul class="nav">
+        <li class="nav-item">
+            <a href="#">Django 博客教程 <span class="post-count">(13)</span></a>
+        </li>
+        <li class="nav-item">
+            <a href="#">Python 教程 <span class="post-count">(11)</span></a>
+        </li>
+        <li class="nav-item">
+            <a href="#">Django 用户认证 <span class="post-count">(8)</span></a>
+        </li>
+    </ul>
+</div>
+<br>
+<div class="widget widget-tag-cloud">
+    <h4 class="widget-title">标签云</h4>
+    <ul class="nav">
+        <li class="nav-item">
+            <a href="#">Django</a>
+        </li>
+        <li class="nav-item">
+            <a href="#">Python</a>
+        </li>
+        <li class="nav-item">
+            <a href="#">Java</a>
+        </li>
+        <li class="nav-item">
+            <a href="#">笔记</a>
+        </li>
+        <li class="nav-item">
+            <a href="#">文档</a>
+        </li>
+        <li class="nav-item">
+            <a href="#">AngularJS</a>
+        </li>
+        <li class="nav-item">
+            <a href="#">CSS</a>
+        </li>
+        <li class="nav-item">
+            <a href="#">JavaScript</a>
+        </li>
+        <li class="nav-item">
+            <a href="#">Snippet</a>
+        </li>
+        <li class="nav-item">
+            <a href="#">jQuery</a>
+        </li>
+    </ul>
+</div>
+<br>
+<div class="rss">
+    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+</div>

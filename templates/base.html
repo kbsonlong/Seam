@@ -1,0 +1,48 @@
+{% load blog_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+
+    <!--引用bootstrap样式文件bootstrap.min.css -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+{#    <link rel="stylesheet" href="/static/md_css/monokai.css">#}
+<link rel="stylesheet" href="/static/bootstrap/css/fileinput.min.css">
+    <link rel="stylesheet" href="/static/css/highlights/default.css">
+<link rel="stylesheet" href="/static/css/md_css/custom.css">
+</head>
+<body>
+<!-- 引入导航栏-->
+{% include 'header.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-1">
+            <!-- 引入侧边栏-->
+            {% include 'sidebar.html' %}
+        </div>
+
+       <div class="col-lg-9">
+            <!--页面主题内容 -->
+           {% block main %} {% endblock %}
+       </div>
+
+        <div class="col-lg-2">
+            {% include "right_sidebar.html" %}
+        </div>
+    </div>
+</div>
+
+<!-- 引入注脚-->
+{% include 'footer.html' %}
+
+<script src="/static/js/jquery/jquery-3.4.1.min.js"></script>
+<script src="/static/js/layer/layer.js"></script>
+<script src="/static/js/popper/popper-1.14.4.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="/static/bootstrap/js/fileinput.min.js"></script>
+<script src="/static/bootstrap/js/fileinput_locale_zh.js"></script>
+<script src="/static/js/1.js"></script>
+</body>
+</html>

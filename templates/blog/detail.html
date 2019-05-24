@@ -1,0 +1,60 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    文章详情
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block main %}
+
+<!-- 文章详情 -->
+<div class="container">
+
+    <div class="row">
+        <!-- 标题及作者 -->
+        <h1 class="col-12 mt-4 mb-4">{{ post.title }}</h1>
+        <div class="col-12 alert alert-success">
+            <div class="float">
+                <div class="float-left">作者：{{ post.author }}</div>
+                <div class="float-right">
+                    {% if user == post.author %}
+                        <a href="#" onclick="confirm_delete()">
+                            <button type="button" class="btn btn-danger" >删除文章</button>
+                        </a>
+                        <a href="#"><button class="btn btn-primary">编辑文章</button></a>
+                {% endif %}
+                </div>
+            </div>
+            <div class="float">
+                | |浏览：{{ post.total_views }}
+            </div>
+        </div>
+        <!-- 文章正文 -->
+        <div class="col-12">
+            <p>{{ post.body |safe }}</p>
+        </div>
+    </div>
+</div>
+
+    <script>
+    // 删除文章的函数
+    function confirm_delete() {
+        // 调用layer弹窗组件
+        layer.open({
+            // 弹窗标题
+            title: "确认删除",
+            // 正文
+            content: "确认删除这篇文章吗？",
+            // 点击确定按钮后调用的回调函数
+            yes: function(index, layero) {
+                // 指定应当前往的 url
+                location.href='{% url "blog:post_delete" post.id %}'
+            },
+        })
+    }
+</script>
+
+{% endblock main %}
