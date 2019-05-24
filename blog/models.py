@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.urls import reverse
 
 
 # Create your models here.
@@ -49,3 +50,7 @@ class Post(models.Model):
     def increase_views(self):
         self.total_views += 1
         self.save(update_fields=['total_views'])
+
+        # 获取文章地址
+    def get_absolute_url(self):
+        return reverse('blog:post', args=[self.pk])

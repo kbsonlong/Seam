@@ -29,7 +29,8 @@ urlpatterns = [
     path('password-reset/',include('password_reset.urls')),
     path('blog/',include('blog.urls',namespace='blog')),
     path('',IndexView.as_view(),name='index'),
-    path('userprofile/',include('userprofile.urls',namespace='userprofile'))
+    path('userprofile/',include('userprofile.urls',namespace='userprofile')),
+    path('comment/',include('comments.urls',namespace='comment')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

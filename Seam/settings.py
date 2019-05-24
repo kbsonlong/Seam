@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'reversion',
     'password_reset',
     'blog.apps.BlogConfig',
-    'userprofile',
+    'comments.apps.CommentsConfig',
+    'userprofile.apps.UserprofileConfig',
 ]
 
 MIDDLEWARE = [

@@ -8,6 +8,7 @@ import markdown
 from markdown.extensions.toc import TocExtension
 from .models import Post,Category,Tags
 from .forms import PostForm
+from comments.forms import CommentForm
 # Create your views here.
 
 def index(request):
@@ -83,6 +84,17 @@ class PostDetailView(DetailView):
         post.body = md.convert(post.body)
         post.toc = md.toc
         return post
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView,self).get_context_data(**kwargs)
+        form = CommentForm()
+        # 获取这篇 post 下的全部评论
+        comment_list = self.object.comment_set.all()
+        context.update({
+            'form': form,
+            'comment_list': comment_list
+        })
+        return context
 
 class PostCreateView(CreateView):
     template_name = 'blog/post_create.html'
