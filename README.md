@@ -11,8 +11,8 @@ Django==2.2.1
 
 #### 安装教程
 
-1. xxxx
-2. xxxx
+1. pip install requirements
+2. pip install https://codeload.github.com/sshwsfc/xadmin/zip/django2
 3. xxxx
 
 #### 使用说明

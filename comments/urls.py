@@ -10,6 +10,7 @@ from django.urls import path
 from . import views
 app_name = 'comments'
 
-urlpattrens = [
-    path('post_comment/<int:post_pk>/',views.post_comment,name='post_comment')
+urlpatterns = [
+    path('post_comment/<int:post_pk>/',views.post_comment,name='post_comment'),
+    path('post_comment/<int:post_pk>/<int:parent_comment_id>',views.post_comment,name='comment_reply'),
 ]

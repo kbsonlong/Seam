@@ -7,9 +7,13 @@
 # @Software: PyCharm
 
 from django import forms
+from ckeditor.widgets import CKEditorWidget
 from .models import Comment
 
+
 class CommentForm(forms.ModelForm):
-    class Meat:
-        model =Comment
-        fields = ['body','email','url']
+    text =  forms.CharField(widget=CKEditorWidget())
+    class Meta:
+        model = Comment
+        # fields = [ 'email', 'url', 'text']
+        fields = [ 'text']

@@ -1,41 +1,70 @@
-from django.shortcuts import render,get_object_or_404,redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.views.generic.edit import CreateView
-# Create your views here.
 from blog.models import Post
+from notifications.signals import notify
+from django.contrib.auth.models import User
+from .models import Comment
 from .forms import CommentForm
 
-# 文章评论
+
+
+
 @login_required(login_url='/userprofile/login/')
-def post_comment(request, post_pk):
-    post = get_object_or_404(Post, pk=post_pk)
+# 新增参数 parent_comment_id
+def post_comment(request, post_pk, parent_comment_id=None):
+    article = get_object_or_404(Post, pk=post_pk)
 
     # 处理 POST 请求
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
+        print(request.POST,comment_form.is_valid())
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
-            new_comment.post = post
+            new_comment.post = article
             new_comment.user = request.user
+
+            # 给管理员发送通知
+            if not request.user.is_superuser:
+                notify.send(
+                    request.user,
+                    recipient=User.objects.filter(is_superuser=1),
+                    verb='回复了你',
+                    target=article,
+                    action_object=new_comment,
+                )
+
+            # 二级回复
+            if parent_comment_id:
+                parent_comment = Comment.objects.get(pk=parent_comment_id)
+                # 若回复层级超过二级，则转换为二级
+                new_comment.parent_id = parent_comment.get_root().id
+                # 被回复人
+                new_comment.reply_to = parent_comment.user
+                new_comment.save()
+                # 给其他用户发送通知
+                if not parent_comment.user.is_superuser:
+                    notify.send(
+                        request.user,
+                        recipient=parent_comment.user,
+                        verb='回复了你',
+                        target=article,
+                        action_object=new_comment,
+                    )
+                return HttpResponse('200 OK')
             new_comment.save()
-            return redirect(post)
+            return redirect(article)
         else:
-            # 检查到数据不合法，重新渲染详情页，并且渲染表单的错误。
-            # 因此我们传了三个模板变量给 detail.html，
-            # 一个是文章（Post），一个是评论列表，一个是表单 form
-            # 注意这里我们用到了 post.comment_set.all() 方法，
-            # 这个用法有点类似于 Post.objects.all()
-            # 其作用是获取这篇 post 下的的全部评论，
-            # 因为 Post 和 Comment 是 ForeignKey 关联的，
-            # 因此使用 post.comment_set.all() 反向查询全部评论。
-            # 具体请看下面的讲解。
-            comment_list = post.comment_set.all()
-            context = {'post': post,
-                       'form': comment_form,
-                       'comment_list': comment_list
-                       }
-            return render(request, 'blog/detail.html', context=context)
-    # 处理错误请求
+            return HttpResponse("表单内容有误，请重新填写。")
+    # 处理 GET 请求
+    elif request.method == 'GET':
+        comment_form = CommentForm()
+        context = {
+            'form': comment_form,
+            'post_pk': post_pk,
+            'parent_comment_id': parent_comment_id
+        }
+        return render(request, 'comment/reply.html', context)
+    # 处理其他请求
     else:
-        return redirect(post)
+        return HttpResponse("仅接受GET/POST请求。")

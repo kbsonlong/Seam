@@ -31,6 +31,8 @@ urlpatterns = [
     path('',IndexView.as_view(),name='index'),
     path('userprofile/',include('userprofile.urls',namespace='userprofile')),
     path('comment/',include('comments.urls',namespace='comment')),
+    path('inbox/notifications/', include('notifications.urls', namespace='notifications')),
+    path('notice/', include('notice.urls', namespace='notice')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

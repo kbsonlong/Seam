@@ -57,32 +57,55 @@
         {% endif %}
     {% endif %}
 
-    <div class="row mt-4">
+    <div class="row mt-2">
 
         {% for post in post_list %}
         <!-- 文章内容 -->
-        <div class="col-4 mb-4">
-        <!-- 卡片容器 -->
-            <div class="card h-100">
+            <!-- 标题图 -->
+            {% if post.avatar %}
+                <div class="col-3">
+                    <img src="{{ post.avatar.url }}" alt="avatar" style="max-width:100%; border-radius: 20px">
+                </div>
+            {% else %}
+                <div class="col-3">
+                    <img src="https://www.alongparty.cn/img/yindaotu.png" alt="avatar" style="max-width:100%; border-radius: 20px">
+                </div>
+            {% endif %}
+            <div class="col-9">
                 <!-- 标题 -->
-                <h6 class="card-header"> <a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a></h6>
+                <h4>
+                    <b><a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a>     </b>
+                </h4>
                 <!-- 摘要 -->
-                <div class="card-body">
-                    <p class="card-text">{{ post.body|slice:'100' }}...</p>
+                <div>
+                    <p style="color: gray;">{% if post.excerpt %}
+{{ post.excerpt }}
+                        {% else %}
+                        {{ post.body|slice:'100' }}
+                    {% endif %}...</p>
                 </div>
                 <!-- 注脚 -->
-                <div class="card-footer">
-                    <a href="{% url 'blog:detail' post.pk %}" class="btn btn-primary">阅读更多</a>
-                    <!-- 显示浏览量 -->
-                    <span>
-                        <small class="col align-self-end" style="color: gray;">
-                            浏览: {{ post.total_views }}
-                        </small>
+                <p>
+                    <!-- 附加信息 -->
+                    <span style="color: green;">
+                        <i class="fas fa-eye">{{ post.total_views }} &nbsp;&nbsp;&nbsp;</i>
                     </span>
-                </div>
+                    <span style="color: darkmagenta;">
+                        <i class="fas fa-comments">{{ post.comment_set.count }}&nbsp;&nbsp;&nbsp;</i>
+                    </span>
+                    <span style="color: coral;">
+                        <i class="fas fa-clock">
+                            {% if post.create_time %}
+                                {{ post.create_time|date:'Y-m-d' }} &nbsp;&nbsp;&nbsp;
+                            {% elif post.modified_time %}
+                                {{ post.modified_time|date:'Y-m-d' }}
+                            {% endif %}
+                        </i>
+                    </span>
+                </p>
 
-            </div>
         </div>
+            <hr style="width: 100%;"/>
         {% endfor %}
 
     </div>
@@ -121,6 +144,7 @@
             {% endif %}
         </div>
     </div>
+
 
 </div>
 {% endblock main %}

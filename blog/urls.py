@@ -15,5 +15,9 @@ urlpatterns =[
     path('post/<int:pk>/',views.PostDetailView.as_view(),name='detail'),
     path('post_delete/<int:pk>/',views.post_delete,name='post_delete'),
     path('post_create/',views.PostCreateView.as_view(),name='post_create'),
-    path('post_update/',views.PostUpdateView.as_view(),name='post_update'),
+    path('post_update/<int:pk>/',views.PostUpdateView.as_view(),name='post_update'),
+    # path('post_update/<int:id>/',views.article_update,name='post_update'),
+    path('category/<int:pk>/', views.CategoryView.as_view(), name='category'),
+    path('tag/<int:pk>/', views.TagView.as_view(), name='tag'),
+    path('archives/<int:year>/<int:month>/', views.ArchivesView.as_view(), name='archives'),
 ]
