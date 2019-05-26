@@ -13,7 +13,14 @@ Django==2.2.1
 
 1. pip install requirements
 2. pip install https://codeload.github.com/sshwsfc/xadmin/zip/django2
-3. xxxx
+3. python3 manage.py findstatic xadmin
+4. ln -s /usr/local/lib/python3.6/site-packages/xadmin/static/xadmin static/
+5. python3 manage.py findstatic ckeditor
+6. ln -s /usr/local/lib/python3.6/site-packages/ckeditor/static/ckeditor/ static/
+7. wget https://ckeditor.com/cke4/sites/default/files/prism/releases/prism_1.0.1.zip
+8. wget http://seam.along.party/static/ckeditor/ckeditor/plugins/prism/prism.css
+9. unzip prism_1.0.1.zip && mv prism static/ckeditor/ckeditor/plugins && 
+mv prism.css static/ckeditor/ckeditor/plugins/prism/prism.css
 
 #### 使用说明
 
