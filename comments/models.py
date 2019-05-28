@@ -11,7 +11,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 @python_2_unicode_compatible
 class Comment(MPTTModel):
     user = models.ForeignKey(
-        User,
+        'userprofile.UserProfile',
         on_delete=models.CASCADE,
         related_name='commments',
         default='',
@@ -35,7 +35,7 @@ class Comment(MPTTModel):
 
     # 新增，记录二级评论回复给谁, str
     reply_to = models.ForeignKey(
-        User,
+        'userprofile.UserProfile',
         null=True,
         blank=True,
         on_delete=models.CASCADE,

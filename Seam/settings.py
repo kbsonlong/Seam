@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
     'password_reset',
-    'taggit',
+    # 'taggit',
     'ckeditor',
     'mptt',
     'notifications',
@@ -173,3 +173,4 @@ CKEDITOR_CONFIGS = {
         'extraPlugins': ','.join(['codesnippet', 'prism', 'widget', 'lineutils']),
     }
 }
+AUTH_USER_MODEL = 'userprofile.UserProfile'

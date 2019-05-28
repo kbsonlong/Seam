@@ -19,6 +19,11 @@
                 <br>
                 <form class="form-group" enctype="multipart/form-data" method="post"  action="." >
                     {% csrf_token %}
+                    <div class="form-group col-md-4">
+                        <label for="email">邮箱</label>
+                        <input type="text" class="form-control" name="email" id="email"  value="{% if profile.email %}{{ profile.email }}{% endif %}">
+                    </div>
+{#                    {{ profile_form.as_p }}#}
                     <!-- avatar -->
                     <div class="form-group col-md-4">
                         <label for="avatar">上传头像</label>

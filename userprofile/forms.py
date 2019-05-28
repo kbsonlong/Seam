@@ -8,7 +8,8 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+# from .models import Profile
+from userprofile.models import UserProfile
 
 class UserLoginForm(forms.Form):
     username = forms.CharField()
@@ -20,8 +21,8 @@ class UserRegisterForm(forms.ModelForm):
     password2 = forms.CharField()
 
     class Meta:
-        model = User
-        fields = ['username','email']
+        model = UserProfile
+        fields = ['username','email','phone','avatar','bio']
 
     def clean_password2(self):
         data = self.cleaned_data
@@ -32,5 +33,5 @@ class UserRegisterForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     class Meta:
-        model = Profile
-        fields = ('phone','avatar','bio')
+        model = UserProfile
+        fields = ('email' , 'phone', 'avatar', 'bio')

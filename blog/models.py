@@ -32,7 +32,7 @@ class Tags(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=150,verbose_name="标题")
     body = models.TextField(verbose_name="正文",null=True,blank=True)
-    author = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True,verbose_name="作者")
+    author = models.ForeignKey('userprofile.UserProfile',on_delete=models.SET_NULL,null=True,blank=True,verbose_name="作者")
     category = models.ForeignKey(Category,on_delete=models.SET_NULL,null=True,verbose_name="文章分类")
     # 文章标签
     tags = models.ManyToManyField(Tags, blank=True,verbose_name="文章标签")

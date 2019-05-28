@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import UserLoginForm,UserRegisterForm,ProfileForm
-from .models import Profile
+from .models import UserProfile
 # Create your views here.
 
 def user_login(request):
@@ -71,16 +71,19 @@ def user_delete(request,id):
 
 @login_required(login_url='/userprofile/login/')
 def profile_edit(request,id):
-    user = User.objects.get(pk=id)
-    profile = Profile.objects.get(user_id=id)
+    profile = UserProfile.objects.get(pk=id)
 
     if request.method =='POST':
-        if request.user != user:
+        if request.user != profile:
             return HttpResponse('你没有权限修改此用户信息')
 
-        profile_form = ProfileForm(request.POST,request.FILES)
+        profile_form = ProfileForm(request.POST or None, request.FILES or None)
+        print(request.FILES)
+        print(profile_form.is_valid())
         if profile_form.is_valid():
             profile_cd = profile_form.cleaned_data
+            # profile.username = profile_cd['username']
+            profile.email = profile_cd['email']
             profile.phone = profile_cd['phone']
             profile.bio = profile_cd['bio']
             # 如果 request.FILES 存在文件，则保存
@@ -92,6 +95,6 @@ def profile_edit(request,id):
         else:
             return HttpResponse("注册表单输入有误。请重新输入~")
     else:
-        profile_form = ProfileForm()
-        context = {'profile_form': profile_form, 'profile': profile, 'user': user}
+        profile_form = ProfileForm( instance=request.user)
+        context = {'profile_form': profile_form, 'profile': profile, 'user': profile}
         return render(request, 'userprofile/profile.html', context)
