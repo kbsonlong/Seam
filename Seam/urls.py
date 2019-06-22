@@ -19,9 +19,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 import xadmin
 from xadmin.plugins import xversion
+from rest_framework import routers
+
+from api.views import blog
 from blog.views import IndexView
+
+
 xadmin.autodiscover()
 xversion.register_models()
+router = routers.DefaultRouter()
+router.register(r'posts', blog.PostApiView)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +41,8 @@ urlpatterns = [
     path('comment/',include('comments.urls',namespace='comment')),
     path('inbox/notifications/', include('notifications.urls', namespace='notifications')),
     path('notice/', include('notice.urls', namespace='notice')),
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

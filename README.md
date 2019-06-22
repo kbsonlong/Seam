@@ -22,6 +22,9 @@ Django==2.2.1
 9. unzip prism_1.0.1.zip && mv prism static/ckeditor/ckeditor/plugins && 
 mv prism.css static/ckeditor/ckeditor/plugins/prism/prism.css
 
+
+[django_rest_framework](media/docs/README.md)
+
 #### 使用说明
 
 1. xxxx
