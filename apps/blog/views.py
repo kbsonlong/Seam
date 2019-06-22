@@ -1,10 +1,8 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.views.generic import ListView,DetailView
-from django.views.generic.edit import FormView,CreateView,UpdateView,DeleteView
+from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.utils.text import slugify
 from django.urls import reverse_lazy
-from django.http import HttpResponse
-from django.contrib.auth.models import User
 from django.db.models import Q
 import markdown
 from markdown.extensions.toc import TocExtension

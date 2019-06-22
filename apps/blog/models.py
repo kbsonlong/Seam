@@ -4,6 +4,8 @@ from django.urls import reverse
 from PIL import Image
 import markdown
 from django.utils.html import strip_tags
+from mdeditor.fields import MDTextField #必须导入
+
 # Create your models here.
 
 #分类模型
@@ -31,7 +33,8 @@ class Tags(models.Model):
 ##文章模型
 class Post(models.Model):
     title = models.CharField(max_length=150,verbose_name="标题")
-    body = models.TextField(verbose_name="正文",null=True,blank=True)
+    # body = models.TextField(verbose_name="正文",null=True,blank=True)
+    body = MDTextField()
     author = models.ForeignKey('userprofile.UserProfile',on_delete=models.SET_NULL,null=True,blank=True,verbose_name="作者")
     category = models.ForeignKey(Category,on_delete=models.SET_NULL,null=True,verbose_name="文章分类")
     # 文章标签

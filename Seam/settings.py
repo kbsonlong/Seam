@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'password_reset',
     # 'taggit',
     'ckeditor',
+    'mdeditor',
     'mptt',
     'notifications',
     'rest_framework',
